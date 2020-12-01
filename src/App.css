@@ -1,0 +1,62 @@
+.searchBar {
+  width: 100%;
+  padding: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #ffffff;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.15);
+}
+
+.searchBar input {
+  width: 50vw;
+  padding: 10px;
+  box-shadow: inset 1px 1px 3px 0 rgba(0, 0, 0, 0.15);
+  border-radius: 6px;
+  border-width: 0px;
+  background-color: var(--background);
+}
+
+.container {
+  margin: auto;
+  width: 50vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-items: stretch;
+  flex-direction: column;
+}
+
+.infoBox {
+  margin: 20px 0 12px;
+  background: #ffffff;
+  border: 1px solid #dcdcdc;
+  box-shadow: 1px 2px 6px 0 rgba(0, 0, 0, 0.12);
+  border-radius: 6px;
+  padding: 16px;
+}
+
+.filters {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  padding: 10px;
+  background: #ffffff;
+  border: 0 solid #dcdcdc;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.12);
+  border-radius: 6px;
+}
+
+.filters button {
+  padding: 6px 24px;
+  margin-right: 10px;
+  background: #ffffff;
+  border: 0.5px solid #dcdcdc;
+  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+  border-radius: 14.5px;
+}
+
+.filters button:hover,
+button:active {
+  background: #fbfbfb;
+  box-shadow: none;
+}
