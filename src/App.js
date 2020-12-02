@@ -9,6 +9,7 @@ const App = () => {
    const [ready, setReady] = useState(false);
    const [sort, setSort] = useState('hot');
    const [message, setMessage] = useState('Loading . . .');
+   const [activeBtn, setActiveBtn] = useState(sort);
 
 
    const sub = 'r/Parenting';
@@ -50,7 +51,7 @@ const App = () => {
    });
 
    const getPosts = async (token) => {
-      await fetch(`https://oauth.reddit.com/${home}`, {
+      await fetch(`https://oauth.reddit.com/${sort}`, {
          method: 'GET',
          headers: {
             'Authorization': `bearer ${token}`,
@@ -71,11 +72,41 @@ const App = () => {
       getPosts(token);
    }, [token, sort]);
 
+   useEffect(() => {
+      console.log("Sort: " + sort);
+   }, [sort]);
 
-   const handleClick = (event) => {
-      event.preventDefault();
-      console.log("Button: " + event.target.value);
-      setSort(event.target.value);
+   const Filters = () => {
+      const handleClick = (event, name) => {
+         event.preventDefault();
+
+         setSort(event.target.value);
+         setActiveBtn(name);
+      };
+
+      return (
+         <div className="filters">
+            <button
+               value="hot"
+               className={activeBtn === 'hot' && 'active'}
+               onClick={(e) => { handleClick(e, 'hot') }}>
+               HOT
+               </button>
+            <button
+               value="new"
+               className={activeBtn === 'new' && 'active'}
+               onClick={(e) => { handleClick(e, 'new') }}>
+               NEW
+               </button>
+            <button
+               value="top"
+               className={activeBtn === 'top' && 'active'}
+               onClick={(e) => { handleClick(e, 'top') }}>
+               TOP
+               </button>
+            <button >Card</button>
+         </div>
+      );
    };
 
    return (
@@ -88,12 +119,8 @@ const App = () => {
             </form>
          </div>
          <div className="container">
-            <div className="filters">
-               <button value="hot" onClick={handleClick}>HOT</button>
-               <button value="new" onClick={handleClick}>NEW</button>
-               <button value="top" onClick={handleClick}>TOP</button>
-               <button>Card</button>
-            </div>
+            <Filters />
+
             <div className="cardContainer">
                {ready ?
                   posts.map((post, index) => {
