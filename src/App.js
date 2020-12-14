@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./App.css";
 import Feedback from "./Feedback";
 import Feed from "./Feed";
+import Filters from "./Filters";
 
 const App = () => {
    const [token, setToken] = useState('');
@@ -76,37 +77,9 @@ const App = () => {
       console.log("Sort: " + sort);
    }, [sort]);
 
-   const Filters = () => {
-      const handleClick = (event, name) => {
-         event.preventDefault();
-
-         setSort(event.target.value);
-         setActiveBtn(name);
-      };
-
-      return (
-         <div className="filters">
-            <button
-               value="hot"
-               className={activeBtn === 'hot' && 'active'}
-               onClick={(e) => { handleClick(e, 'hot') }}>
-               HOT
-               </button>
-            <button
-               value="new"
-               className={activeBtn === 'new' && 'active'}
-               onClick={(e) => { handleClick(e, 'new') }}>
-               NEW
-               </button>
-            <button
-               value="top"
-               className={activeBtn === 'top' && 'active'}
-               onClick={(e) => { handleClick(e, 'top') }}>
-               TOP
-               </button>
-            <button >Card</button>
-         </div>
-      );
+   const changeSort = (value, name) => {
+      setSort(value);
+      setActiveBtn(name);
    };
 
    return (
@@ -119,7 +92,9 @@ const App = () => {
             </form>
          </div>
          <div className="container">
-            <Filters />
+            <Filters
+               activeBtn={activeBtn}
+               onChange={changeSort} />
 
             <div className="cardContainer">
                {ready ?
