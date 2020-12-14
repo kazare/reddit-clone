@@ -41,7 +41,7 @@ const Feed = ({ data, subreddit, author, title, selftext, score, permalink, comm
     };
 
     return (
-        <a className="cardLink" href={`https://www.reddit.com${permalink}`} target="_blank" rel="noreferrer">
+        <a className="cardLink" href={`https://www.reddit.com${permalink}`} target="_blank" rel="noopener">
 
             <div className="card">
                 <div className="postScore">
@@ -56,7 +56,7 @@ const Feed = ({ data, subreddit, author, title, selftext, score, permalink, comm
                         <span className="seperator">&#8231;</span>
                         <div className="user">Posted by <a href={`https://www.reddit.com/user/${author}`}>u/{author}</a></div>
                         <span className="seperator">&#8231;</span>
-                        <div className="postTime"><a href={`https://www.reddit.com${permalink}`} target="_blank" rel="noreferrer"><ReactTimeAgo date={ms} locale="en-US" /></a></div>
+                        <div className="postTime"><a href={`https://www.reddit.com${permalink}`} target="_blank" rel="noopener"><ReactTimeAgo date={ms} locale="en-US" /></a></div>
                     </div>
 
                     <div className="awards">
@@ -78,7 +78,7 @@ const Feed = ({ data, subreddit, author, title, selftext, score, permalink, comm
 
                     <div className="postBody">{typeOfPost(postType)}</div>
 
-                    <a className="postComments" href={`https://www.reddit.com${permalink}`} target="_blank" rel="noreferrer">
+                    <a className="postComments" href={`https://www.reddit.com${permalink}`} target="_blank" rel="noopener">
                         <div>
                             <ion-icon name="chatbox"></ion-icon>
                             <span>{comments} comments</span>
