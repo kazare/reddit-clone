@@ -83,16 +83,12 @@ const App = () => {
 
          <div className="searchBar">
             <h1 className="title">readit</h1>
-            <form action="input">
-               <input type="text" />
-            </form>
          </div>
          <div className="container">
             <div className="filters">
                <button value="hot" onClick={handleClick}>HOT</button>
                <button value="new" onClick={handleClick}>NEW</button>
                <button value="top" onClick={handleClick}>TOP</button>
-               <button>Card</button>
             </div>
             <div className="cardContainer">
                {ready ?
