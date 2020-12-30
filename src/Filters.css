@@ -1,0 +1,79 @@
+.filters {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  padding: 10px;
+  background: #ffffff;
+  border: 0 solid var(--border-color);
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.12);
+  border-radius: 6px;
+}
+
+.filtrBtn,
+.cardBtn {
+  padding: 6px 24px;
+  margin-right: 10px;
+  background: #ffffff;
+  border: 0.5px solid var(--border-color);
+  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+  border-radius: 14.5px;
+  font-weight: var(--font-bold);
+  font-size: 16px;
+  color: var(--secondary-text-color);
+}
+
+.filtrBtn:hover,
+.filters .active {
+  background: #fbfbfb;
+  box-shadow: none;
+  color: var(--primary-color);
+}
+
+.dropDown {
+  background: #ffffff;
+  border: 0.5px solid var(--border-color);
+  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+  border-radius: 14.5px;
+  width: 108px;
+}
+
+.dropDown button {
+  display: block;
+  width: 100%;
+  background-color: initial;
+  border: 0;
+  padding: 12px 24px;
+  font-size: 14px;
+  color: var(--secondary-text-color);
+  text-align: left;
+  font-weight: var(--font-semi);
+}
+
+.dropDown button:nth-child(2) {
+  border-top: 0.5px solid var(--border-color);
+  border-bottom: 0.5px solid var(--border-color);
+}
+
+.dropDown button:hover,
+.dropDown button:active {
+  background: #fbfbfb;
+  color: var(--primary-color);
+  border-radius: 14.5px;
+}
+
+.customS {
+  padding: 6px 24px;
+  margin-right: 10px;
+  background: #ffffff;
+  border: 0.5px solid var(--border-color);
+  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+  border-radius: 14.5px;
+  font-weight: var(--font-bold);
+  font-size: 16px;
+  color: var(--secondary-text-color);
+  width: fit-content;
+  position: relative;
+}
+
+.customS select {
+  display: none;
+}
