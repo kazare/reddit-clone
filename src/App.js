@@ -3,6 +3,8 @@ import "./App.css";
 import Feedback from "./Feedback";
 import Feed from "./Feed";
 import Filters from "./Filters";
+import Post from "./Post";
+import Comment from "./Comment";
 
 const App = () => {
    const [token, setToken] = useState('');
@@ -11,11 +13,14 @@ const App = () => {
    const [sort, setSort] = useState('hot');
    const [message, setMessage] = useState('Loading . . .');
    const [activeBtn, setActiveBtn] = useState(sort);
+   const [post, setPost] = useState([]);
+   const [comments, setComments] = useState([]);
 
 
    const sub = 'r/Parenting';
    const subPosts = `${sub}/${sort}/`;
    const home = `${sort}`;
+   const onePost = "/r/Parenting/comments/ko13m9/";
 
    const CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
    const params = new URLSearchParams();
@@ -51,7 +56,8 @@ const App = () => {
       }
    });
 
-   const getPosts = async (token) => {
+   //ORIGINAL DO NOT TOUCH
+   const getFeed = async (token) => {
       await fetch(`https://oauth.reddit.com/${sort}`, {
          method: 'GET',
          headers: {
@@ -68,9 +74,27 @@ const App = () => {
          .catch(error => console.log("ERROR: ", error))
    };
 
+   //grab individual post - wip
+   const getPost = async (sub, id) => {
+      await fetch(`https://oauth.reddit.com/r/tifu/comments/l7od85`, {
+         method: 'GET',
+         headers: {
+            'Authorization': `bearer ${token}`,
+            'User-Agent': 'windows:com:v1 (by Kazare)'
+         }
+      })
+         .then(d => d.json())
+         .then((datas) => {
+            setPost(datas[0].data.children);
+            setComments(datas[1].data.children);
+            console.log(datas);
+         })
+         .catch(error => console.log("ERROR: ", error))
+   };
+
    useEffect(() => {
       console.log("This is the current token: " + token);
-      getPosts(token);
+      getFeed(token);
    }, [token, sort]);
 
    useEffect(() => {
@@ -82,19 +106,56 @@ const App = () => {
       setActiveBtn(name);
    };
 
+   const changeView = (value) => {
+      console.log("View is now: " + value);
+   }
+
+   const changePost = (sub, id) => {
+      console.log(sub, id);
+      getPost(sub, id);
+   }
+
    return (
       <div className="App" >
-
          <div className="searchBar">
             <h1 className="title">readit</h1>
             <form action="input">
                <input type="text" />
             </form>
          </div>
+         <div className="post">
+            {post.map((post, index) => {
+               let p = post.data;
+               return (
+                  <Post
+                     sub={p.subreddit}
+                     author={p.author}
+                     time={p.created_utc}
+                     title={p.title}
+                     body={p.selftext_html}
+                     upvotes={p.ups}
+                  />
+               );
+            })}
+
+            {comments.map((comment, index) => {
+               let c = comment.data;
+               return (
+                  <Comment
+                     author={c.author}
+                     time={c.created_utc}
+                     body={c.body}
+                     upvotes={c.ups}
+                     replies={c.replies}
+                  />
+               );
+            })}
+         </div>
          <div className="container">
             <Filters
                activeBtn={activeBtn}
-               onChange={changeSort} />
+               onChange={changeSort}
+               onChange={changeView} />
 
             <div className="cardContainer">
                {ready ?
@@ -103,7 +164,8 @@ const App = () => {
                      return (
                         <Feed
                            key={postData.id}
-                           data={postData}
+                           sub={postData.subreddit}
+                           postId={postData.id}
                            subreddit={postData.subreddit_name_prefixed}
                            author={postData.author}
                            title={postData.title}
@@ -119,6 +181,7 @@ const App = () => {
                            url={postData.url}
                            video={postData.media}
                            postType={postData.post_hint}
+                           onChange={changePost}
                         />
                      );
                   })

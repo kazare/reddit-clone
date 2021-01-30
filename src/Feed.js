@@ -1,8 +1,9 @@
+import "./App";
 import "./Feed.css";
 import ReactTimeAgo from 'react-time-ago';
 
 
-const Feed = ({ data, subreddit, author, title, selftext, score, permalink, comments, flair, flair_color, flair_text_color, time, awards, url, video, postType }) => {
+const Feed = ({ sub, postId, subreddit, author, title, selftext, score, permalink, comments, flair, flair_color, flair_text_color, time, awards, url, video, postType, onChange }) => {
     const ms = time * 1000;
 
     const decodeHtml = (html) => {
@@ -40,10 +41,15 @@ const Feed = ({ data, subreddit, author, title, selftext, score, permalink, comm
         }
     };
 
+    const handlePostClick = (e, sub, id) => {
+        e.preventDefault();
+        onChange(sub, id);
+    };
+
     return (
         <a className="cardLink" href={`https://www.reddit.com${permalink}`} target="_blank" rel="noopener">
 
-            <div className="card">
+            <div className="card" onClick={(e) => { handlePostClick(e, sub, postId) }}>
                 <div className="postScore">
                     <div><ion-icon name="caret-up"></ion-icon></div>
                     <div>{abbrScore(score)}</div>

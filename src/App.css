@@ -35,3 +35,13 @@
   border-radius: 6px;
   padding: 16px;
 }
+
+.post {
+  z-index: 1;
+  width: 80vw;
+  margin: auto;
+  background: #ffffff;
+  border: 1px solid var(--border-color);
+  box-shadow: 1px 2px 6px 0 rgba(0, 0, 0, 0.12);
+  border-radius: 6px;
+}
