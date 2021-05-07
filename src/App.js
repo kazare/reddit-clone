@@ -9,11 +9,12 @@ import Comment from "./Comment";
 const App = () => {
    const [token, setToken] = useState('');
    const [posts, setPosts] = useState([]);
-   const [ready, setReady] = useState(false);
+   const [feedReady, setFeedReady] = useState(false);
    const [sort, setSort] = useState('hot');
    const [message, setMessage] = useState('Loading . . .');
    const [activeBtn, setActiveBtn] = useState(sort);
    const [post, setPost] = useState([]);
+   const [postReady, setPostReady] = useState(false);
    const [comments, setComments] = useState([]);
 
 
@@ -68,15 +69,15 @@ const App = () => {
          .then(d => d.json())
          .then((datas) => {
             setPosts(datas.data.children);
-            setReady(true);
+            setFeedReady(true);
             console.log(datas);
          })
          .catch(error => console.log("ERROR: ", error))
    };
 
-   //grab individual post - wip
+   //grab individual post
    const getPost = async (sub, id) => {
-      await fetch(`https://oauth.reddit.com/r/tifu/comments/l7od85`, {
+      await fetch(`https://oauth.reddit.com/r/${sub}/comments/${id}`, {
          method: 'GET',
          headers: {
             'Authorization': `bearer ${token}`,
@@ -87,10 +88,13 @@ const App = () => {
          .then((datas) => {
             setPost(datas[0].data.children);
             setComments(datas[1].data.children);
+            setPostReady(true);
             console.log(datas);
          })
          .catch(error => console.log("ERROR: ", error))
    };
+
+   //`https://oauth.reddit.com/r/tifu/comments/l7od85`
 
    useEffect(() => {
       console.log("This is the current token: " + token);
@@ -115,15 +119,14 @@ const App = () => {
       getPost(sub, id);
    }
 
+   const closePost = () => {
+      setPostReady(false);
+   }
+
    return (
       <div className="App" >
-         <div className="searchBar">
-            <h1 className="title">readit</h1>
-            <form action="input">
-               <input type="text" />
-            </form>
-         </div>
-         <div className="post">
+
+         {postReady ? <div className="post">
             {post.map((post, index) => {
                let p = post.data;
                return (
@@ -132,33 +135,57 @@ const App = () => {
                      author={p.author}
                      time={p.created_utc}
                      title={p.title}
+                     flair={p.link_flair_text}
+                     flair_color={p.link_flair_background_color}
+                     flair_text_color={p.link_flair_text_color}
+                     awards={p.all_awardings}
                      body={p.selftext_html}
                      upvotes={p.ups}
+                     postType={p.post_hint}
+                     url={p.url}
+                     video={p.media}
+                     postId={p.id}
                   />
                );
             })}
+            <div className="commentSection">
 
-            {comments.map((comment, index) => {
-               let c = comment.data;
-               return (
-                  <Comment
-                     author={c.author}
-                     time={c.created_utc}
-                     body={c.body}
-                     upvotes={c.ups}
-                     replies={c.replies}
-                  />
-               );
-            })}
+               {comments.map((comment, index) => {
+                  let c = comment.data;
+                  return (
+                     <Comment
+                        type={comment.kind}
+                        author={c.author}
+                        time={c.created_utc}
+                        body={c.body_html}
+                        upvotes={c.ups}
+                        replies={c.replies}
+
+                     />
+                  );
+               })}
+            </div>
+         </div> : null}
+
+         {postReady ? <div className="overlay" onClick={closePost}>
+            <div className="close"><ion-icon name="close" className="icon"></ion-icon>Close</div>
+         </div> : null}
+
+         <div className="searchBar">
+            <h1 className="title">readit</h1>
+            <form action="input">
+               <input type="text" />
+            </form>
          </div>
-         <div className="container">
+
+         <div className={postReady ? "container inactive-container" : "container"}>
             <Filters
                activeBtn={activeBtn}
                onChange={changeSort}
                onChange={changeView} />
 
             <div className="cardContainer">
-               {ready ?
+               {feedReady ?
                   posts.map((post, index) => {
                      let postData = post.data;
                      return (

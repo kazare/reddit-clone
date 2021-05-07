@@ -25,6 +25,18 @@
   justify-content: center;
   align-items: stretch;
   flex-direction: column;
+  position: initial;
+  overflow: initial;
+  right: auto;
+  left: auto;
+}
+
+.inactive-container {
+  position: fixed;
+  overflow: hidden;
+  right: 0;
+  left: 0;
+  margin: auto;
 }
 
 .infoBox {
@@ -37,11 +49,41 @@
 }
 
 .post {
-  z-index: 1;
+  z-index: 2;
   width: 80vw;
   margin: auto;
   background: #ffffff;
   border: 1px solid var(--border-color);
   box-shadow: 1px 2px 6px 0 rgba(0, 0, 0, 0.12);
   border-radius: 6px;
+  position: absolute;
+}
+
+.commentSection {
+  margin: 40px 20px;
+}
+
+.overlay {
+  z-index: 1;
+  height: 100vh;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  position: fixed;
+  cursor: pointer;
+}
+
+.close {
+  color: white;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  position: absolute;
+  padding: 10px 15px 10px 10px;
+  border-radius: 10px;
+  right: 10px;
+  top: 10px;
+}
+
+.close:hover {
+  background-color: var(--primary-color);
 }
