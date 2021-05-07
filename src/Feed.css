@@ -11,14 +11,9 @@
   flex-direction: row;
 }
 
-.cardLink,
-.cardLink:hover {
-  text-decoration: none;
-  color: var(--primary-text-color);
-}
-
 .card:hover {
   border: 1px solid var(--primary-color);
+  cursor: pointer;
 }
 
 .postScore {

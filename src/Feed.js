@@ -1,16 +1,11 @@
 import "./App";
 import "./Feed.css";
+import { decodeHtml, abbrScore } from "./Handlers";
 import ReactTimeAgo from 'react-time-ago';
 
 
 const Feed = ({ sub, postId, subreddit, author, title, selftext, score, permalink, comments, flair, flair_color, flair_text_color, time, awards, url, video, postType, onChange }) => {
     const ms = time * 1000;
-
-    const decodeHtml = (html) => {
-        var txt = document.createElement("div");
-        txt.innerHTML = html;
-        return txt.childNodes.length === 0 ? "" : txt.childNodes[0].nodeValue;
-    };
 
     const typeOfPost = (postType) => {
         switch (postType) {
@@ -33,66 +28,57 @@ const Feed = ({ sub, postId, subreddit, author, title, selftext, score, permalin
         }
     };
 
-    const abbrScore = (num) => {
-        if (num > 1000) {
-            return (Math.round(num / 1000)).toString() + "k";
-        } else {
-            return (num).toString();
-        }
-    };
-
     const handlePostClick = (e, sub, id) => {
         e.preventDefault();
         onChange(sub, id);
     };
 
     return (
-        <a className="cardLink" href={`https://www.reddit.com${permalink}`} target="_blank" rel="noopener">
 
-            <div className="card" onClick={(e) => { handlePostClick(e, sub, postId) }}>
-                <div className="postScore">
-                    <div><ion-icon name="caret-up"></ion-icon></div>
-                    <div>{abbrScore(score)}</div>
-                    <div><ion-icon name="caret-down"></ion-icon></div>
+        <div className="card" onClick={(e) => { handlePostClick(e, sub, postId) }}>
+            <div className="postScore">
+                <div><ion-icon name="caret-up"></ion-icon></div>
+                <div>{abbrScore(score)}</div>
+                <div><ion-icon name="caret-down"></ion-icon></div>
 
-                </div>
-                <div className="postContent">
-                    <div className="postInfo">
-                        <div className="subName"><a href={`https://www.reddit.com/${subreddit}`}>{subreddit}</a></div>
-                        <span className="seperator">&#8231;</span>
-                        <div className="user">Posted by <a href={`https://www.reddit.com/user/${author}`}>u/{author}</a></div>
-                        <span className="seperator">&#8231;</span>
-                        <div className="postTime"><a href={`https://www.reddit.com${permalink}`} target="_blank" rel="noopener"><ReactTimeAgo date={ms} locale="en-US" /></a></div>
-                    </div>
-
-                    <div className="awards">
-                        {awards.map((award, index) => {
-                            return (
-                                <span className="award">
-                                    <img src={award.icon_url} alt={award.name} /> x{award.count}
-                                </span>
-                            );
-                        })}
-                    </div>
-
-                    <div className="titleRow">
-                        <h3 className="postTitle">{title}</h3>
-                        {flair ? <div className={`${flair_text_color} flairLabel`} style={{ backgroundColor: flair_color }} dangerouslySetInnerHTML={{ __html: flair }} /> : null}
-                    </div>
-
-                    <div className="selftext" dangerouslySetInnerHTML={{ __html: decodeHtml(selftext) }} />
-
-                    <div className="postBody">{typeOfPost(postType)}</div>
-
-                    <a className="postComments" href={`https://www.reddit.com${permalink}`} target="_blank" rel="noopener">
-                        <div>
-                            <ion-icon name="chatbox"></ion-icon>
-                            <span>{comments} comments</span>
-                        </div>
-                    </a>
-                </div>
             </div>
-        </a>
+            <div className="postContent">
+                <div className="postInfo">
+                    <div className="subName"><a href={`https://www.reddit.com/${subreddit}`}>{subreddit}</a></div>
+                    <span className="seperator">&#8231;</span>
+                    <div className="user">Posted by <a href={`https://www.reddit.com/user/${author}`}>u/{author}</a></div>
+                    <span className="seperator">&#8231;</span>
+                    <div className="postTime"><a href={`https://www.reddit.com${permalink}`} target="_blank" rel="noopener"><ReactTimeAgo date={ms} locale="en-US" /></a></div>
+                </div>
+
+                <div className="awards">
+                    {awards.map((award, index) => {
+                        return (
+                            <span className="award">
+                                <img src={award.icon_url} alt={award.name} /> x{award.count}
+                            </span>
+                        );
+                    })}
+                </div>
+
+                <div className="titleRow">
+                    <h3 className="postTitle">{title}</h3>
+                    {flair ? <div className={`${flair_text_color} flairLabel`} style={{ backgroundColor: flair_color }} dangerouslySetInnerHTML={{ __html: flair }} /> : null}
+                </div>
+
+                <div className="selftext" dangerouslySetInnerHTML={{ __html: decodeHtml(selftext) }} />
+
+                <div className="postBody">{typeOfPost(postType)}</div>
+
+                <a className="postComments" href={`https://www.reddit.com${permalink}`} target="_blank" rel="noopener">
+                    <div>
+                        <ion-icon name="chatbox"></ion-icon>
+                        <span>{comments} comments</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+
     );
 };
 
