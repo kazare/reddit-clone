@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import "./App.css";
 import Feedback from "./Feedback";
 import Feed from "./Feed";
-import Filters from "./Filters";
+import Sort from "./Sort";
+import PostView from "./PostView";
 import Post from "./Post";
 import Comment from "./Comment";
 
@@ -16,6 +17,7 @@ const App = () => {
    const [post, setPost] = useState([]);
    const [postReady, setPostReady] = useState(false);
    const [comments, setComments] = useState([]);
+   const [view, setView] = useState('card');
 
 
    const sub = 'r/Parenting';
@@ -105,14 +107,18 @@ const App = () => {
       console.log("Sort: " + sort);
    }, [sort]);
 
+   useEffect(() => {
+      console.log("View is now: " + view);
+   }, [view]);
+
    const changeSort = (value, name) => {
       setSort(value);
       setActiveBtn(name);
    };
 
    const changeView = (value) => {
-      console.log("View is now: " + value);
-   }
+      setView(value);
+   };
 
    const changePost = (sub, id) => {
       console.log(sub, id);
@@ -178,13 +184,21 @@ const App = () => {
             </form>
          </div>
 
-         <div className={postReady ? "container inactive-container" : "container"}>
-            <Filters
-               activeBtn={activeBtn}
-               onChange={changeSort}
-               onChange={changeView} />
+         <div className={postReady ? `container inactive-container ${view}` : `container ${view}`}>
+            <div className="filters">
+               <Sort
+                  activeBtn={activeBtn}
+                  onChange={changeSort}
+               />
 
-            <div className="cardContainer">
+               <PostView
+                  onChange={changeView}
+                  view={view}
+               />
+
+            </div>
+
+            <div className='feedContainer'>
                {feedReady ?
                   posts.map((post, index) => {
                      let postData = post.data;
@@ -209,6 +223,7 @@ const App = () => {
                            video={postData.media}
                            postType={postData.post_hint}
                            onChange={changePost}
+                           feedView={view}
                         />
                      );
                   })

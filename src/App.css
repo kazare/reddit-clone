@@ -31,6 +31,11 @@
   left: auto;
 }
 
+.container.classic,
+.container.compact {
+  width: 70vw;
+}
+
 .inactive-container {
   position: fixed;
   overflow: hidden;

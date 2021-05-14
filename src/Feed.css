@@ -1,6 +1,6 @@
 @import "./variables.css";
 
-.card {
+.feedItem {
   margin-bottom: 12px;
   background: #ffffff;
   border: 1px solid var(--border-color);
@@ -11,7 +11,7 @@
   flex-direction: row;
 }
 
-.card:hover {
+.feedItem:hover {
   border: 1px solid var(--primary-color);
   cursor: pointer;
 }
@@ -33,13 +33,10 @@
   color: grey;
 }
 
-.postContent {
-  width: 100%;
-  padding: 16px 16px 16px 10px;
-}
-
-.postInfo {
-  margin-bottom: 8px;
+.postTitle {
+  font-weight: var(--font-semi);
+  font-size: 16px;
+  margin-right: 5px;
 }
 
 .subName,
@@ -75,17 +72,6 @@
   height: 16px;
 }
 
-.titleRow {
-  margin: 8px 0;
-}
-
-.postTitle {
-  font-weight: var(--font-semi);
-  font-size: 16px;
-  display: inline-block;
-  margin-right: 5px;
-}
-
 .flairLabel {
   background-color: #edeff1;
   color: black;
@@ -103,6 +89,30 @@
 
 .dark {
   color: black;
+}
+
+.postComments div:hover {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+/* card view */
+
+.cardView .postContent {
+  width: 100%;
+  padding: 16px 16px 16px 10px;
+}
+
+.cardView .postInfo {
+  margin-bottom: 8px;
+}
+
+.cardView .titleRow {
+  margin: 8px 0;
+}
+
+.cardView .postTitle {
+  display: inline-block;
 }
 
 .selftext {
@@ -134,24 +144,21 @@
   line-height: 1.5;
 }
 
-.postBody {
+.cardView .postBody {
   border-radius: 1px;
-}
-
-.postBody {
   display: flex;
   align-items: center;
   flex-direction: column;
 }
 
-.postImg,
-.postVideo,
-.postVideo > * {
+.cardView .postImg,
+.cardView .postVideo,
+.cardView .postVideo > * {
   max-width: 100%;
   max-height: 512px;
 }
 
-.postLink {
+.cardView .postLink {
   padding: 5px;
   align-self: flex-start;
   display: -webkit-box;
@@ -173,12 +180,95 @@
   margin-top: 8px;
 }
 
-.postComments div:hover {
-  background-color: var(--primary-color);
-  color: white;
-}
-
 .postComments ion-icon {
   margin-right: 5px;
   vertical-align: middle;
+}
+
+/* classic view */
+
+.feedItem.classicView {
+  display: grid;
+  grid-template-columns: 50px 100px 1fr;
+  grid-template-rows: 1fr;
+  gap: 1em;
+}
+
+.classicView .postBody {
+  width: 100px;
+  height: 100px;
+  box-sizing: content-box;
+  overflow: hidden;
+}
+
+.classicView .postImg,
+.classicView .postVideo,
+.classicView .postVideo iframe,
+.classicView .postVideo > * {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.classicView .postContent,
+.classicView .postBody {
+  padding: 16px 0;
+}
+
+.classicView .postContent {
+  padding-right: 16px;
+}
+
+.classicView .postContent > div {
+  margin-bottom: 5px;
+}
+
+.classicView .titleRow {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.classicView .awards {
+  height: 16px;
+  overflow: hidden;
+  display: block;
+}
+
+/* compact view */
+.feedItem.compactView {
+  display: grid;
+  grid-template-columns: auto 1fr min-content;
+  grid-template-rows: 1fr;
+  gap: 1em;
+  margin-bottom: 0;
+  box-shadow: none;
+  border-radius: 0;
+}
+
+.compactView .postScore {
+  width: auto;
+  display: flex;
+  flex-direction: row;
+}
+
+.compactView .postTitle {
+  display: inline;
+}
+
+.compactView .postContent {
+  padding: 15px 0;
+}
+
+.compactView .awards {
+  height: 16px;
+  overflow: hidden;
+  display: block;
+}
+
+.compactView .postComments div {
+  margin: 0;
+  height: 100%;
+  border-radius: 0;
 }

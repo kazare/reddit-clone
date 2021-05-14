@@ -6,6 +6,8 @@
   border: 0 solid var(--border-color);
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.12);
   border-radius: 6px;
+  display: flex;
+  flex-flow: row wrap;
 }
 
 .filtrBtn,
@@ -21,6 +23,14 @@
   color: var(--secondary-text-color);
 }
 
+.cardDiv {
+  display: inline-block;
+}
+
+.cardBtn {
+  text-transform: uppercase;
+}
+
 .filtrBtn:hover,
 .filters .active {
   background: #fbfbfb;
@@ -34,6 +44,7 @@
   box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.12);
   border-radius: 14.5px;
   width: 108px;
+  position: absolute;
 }
 
 .dropDown button {
@@ -58,22 +69,4 @@
   background: #fbfbfb;
   color: var(--primary-color);
   border-radius: 14.5px;
-}
-
-.customS {
-  padding: 6px 24px;
-  margin-right: 10px;
-  background: #ffffff;
-  border: 0.5px solid var(--border-color);
-  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.12);
-  border-radius: 14.5px;
-  font-weight: var(--font-bold);
-  font-size: 16px;
-  color: var(--secondary-text-color);
-  width: fit-content;
-  position: relative;
-}
-
-.customS select {
-  display: none;
 }
